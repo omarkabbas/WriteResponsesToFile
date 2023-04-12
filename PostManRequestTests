@@ -1,0 +1,23 @@
+// Please read the documentation on the right side (collection level documentation) to learn about how to use this collection -> 
+
+// The opts for the server, also includes the data to be written to file
+let opts = {
+    requestName: request.name || request.url,
+    fileExtension: 'csv',
+    mode: 'appendFile', // Change this to any function of the fs library of node to use it.
+    uniqueIdentifier: false,
+    requestData: pm.request.body.raw,
+    responseData: pm.response.text()
+};
+
+pm.sendRequest({
+    url: 'http://localhost:3000/write',
+    method: 'POST',
+    header: 'Content-Type:application/json',
+    body: {
+        mode: 'raw',
+        raw: JSON.stringify(opts)
+    }
+}, function (err, res) {
+    console.log(res);
+});
